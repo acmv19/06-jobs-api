@@ -1,11 +1,29 @@
 const Music = require("../models/music");
 const { StatusCodes } = require("http-status-codes");
 const { NotFoundError, BadRequestError } = require("../errors");
+
 const getAllMusics = async (req, res) => {
-  res.send("get all music");
+  const musics = await Music.find({ createdBy: req.user.userId }).sort(
+    "createdAt"
+  );
+  res.status(StatusCodes.OK).json({ musics, count: musics.length });
+  //res.send("get all music");
 };
 const getMusic = async (req, res) => {
-  res.send("get one of the music");
+  const {
+    user: { userId },
+    params: { id: musicId },
+  } = req;
+
+  const music = await Music.findOne({
+    _id: musicId,
+    createdBy: userId,
+  });
+  if (!music) {
+    throw new NotFoundError(`no music with the id ${musicId}`);
+  }
+  res.status(StatusCodes.OK).json({ music });
+  //res.send("get one of the music");
 };
 const createMusic = async (req, res) => {
   // res.send("create a music");
@@ -16,10 +34,39 @@ const createMusic = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ music });
 };
 const updateMusic = async (req, res) => {
-  res.send("update music");
+  const {
+    body: { singer, song },
+    user: { userId },
+    params: { id: musicId },
+  } = req;
+  if (singer === "" || song === "") {
+    throw new BadRequestError("singer or  song fields cannot be empty");
+  }
+  const music = await Music.findByIdAndUpdate(
+    { _id: musicId, createdBy: userId },
+    req.body,
+    { new: true, runValidators: true }
+  );
+  if (!music) {
+    throw new NotFoundError(`not music with id  ${musicId}`);
+  }
+  res.status(StatusCodes.OK).json({ music });
+  //res.send("update music");
 };
 const deleteMusic = async (req, res) => {
-  res.send("delete music");
+  const {
+    user: { userId },
+    params: { id: musicId },
+  } = req;
+  const music = await Music.findByIdAndDelete({
+    _id: musicId,
+    createdBy: userId,
+  });
+  if (!music) {
+    throw new NotFoundError(`not music with id  ${musicId}`);
+  }
+  res.status(StatusCodes.OK).send();
+  //res.send("delete music");
 };
 
 module.exports = {
