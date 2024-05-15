@@ -1,0 +1,68 @@
+* {
+  font-style: oblique; /*type of letter */
+  height: auto vh;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+header {
+  background-color: grey;
+}
+.img {
+  float: left;
+  margin-left: 10px;
+}
+body {
+  background-color: rgb(80, 150, 116);
+}
+
+h1 {
+  color: white;
+  text-align: center;
+}
+label {
+  font-size: 18px; /*tamano de letra*/
+  color: rgb(244, 249, 249);
+  padding: 3px;
+  margin: 6px;
+}
+#music-table-header {
+  color: white;
+  background-color: grey;
+  border-color: black;
+  padding-right: 1px;
+}
+
+input,
+textarea {
+  padding: 8px;
+  color: black;
+  border-color: rgb(85, 120, 115);
+  background: rgb(241, 241, 241);
+  width: none;
+  margin: 3px;
+}
+#genre,
+#music-table {
+  color: rgb(252, 250, 250);
+  border-color: rgb(8, 9, 9);
+  background-color: rgb(120, 121, 117);
+  border: 1px solid #503737;
+  border-radius: 1;
+  align-content: center;
+}
+#message {
+  color: rgb(252, 247, 247);
+}
+
+button {
+  display: inline-block;
+  color: white;
+  background-color: rgb(14, 14, 233);
+  border-color: none;
+  padding: 3px;
+  margin: 3px;
+  padding-right: 5px;
+}
+form {
+  margin: auto;
+}
